@@ -8,7 +8,7 @@
 <h2>Data Pengeluaran</h2>
 <ul>
     @foreach ($cashouts as $cashout)
-        <li>{{ $cashout->tanggal_transaksi }} - Rp{{ number_format($cashout->jumlah, 2, ',', '.') }}</li>
+        <li>{{ $cashout->tanggal_transaksi }} - Rp{{ number_format($cashout->jumlah_pengeluaran, 2, ',', '.') }}</li>
     @endforeach
 </ul>
 <p>Total: Rp{{ number_format($totalCashout, 2, ',', '.') }}</p>

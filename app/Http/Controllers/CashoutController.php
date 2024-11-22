@@ -46,10 +46,11 @@ class CashoutController extends Controller
         return redirect('/cashout')->with('success', 'Data berhasil diupdate');
     }
 
-    public function delete($id)
+    public function destroy(cashout $cashout)
     {
-        $cashout = \App\Models\cashout::find($id);
+        // $cashout = \App\Models\cashout::find($id);
         $cashout->delete();
-        return redirect('/cashout')->with('success', 'Data berhasil dihapus');
+        return redirect()->route('cashout.index')
+            ->with('success', 'Cashin deleted successfully');
     }
 }
