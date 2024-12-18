@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Cashin;
+use App\Models\User;
 
 class CashinController extends Controller
 {
@@ -68,4 +69,34 @@ class CashinController extends Controller
         return redirect()->route('cashin.index')
             ->with('success', 'Cashin deleted successfully');
     }
+
+    public function dashboard()
+    {
+        // Ambil data cashin untuk chart, pastikan ada data
+        $cashins = Cashin::orderBy('tanggal_transaksi')->get();
+
+        // Cek apakah $cashins berisi data
+        if ($cashins->isEmpty()) {
+            // Jika tidak ada data, kirim array kosong
+            $cashins = collect([]);
+        }
+
+        // Hitung total revenue
+        $totalRevenue = Cashin::sum('jumlah');
+
+        // Hitung total users
+        $totalUsers = User::count();
+
+        // Jumlah kategori dan produk
+        $totalCategories = 2;
+        $totalProducts = 2;
+
+        // Tampilkan view dashboard
+        return view('pages.dashboard', compact(
+            'cashins',   // Pastikan variabel ini dikirim
+
+        ));
+    }
+
+
 }

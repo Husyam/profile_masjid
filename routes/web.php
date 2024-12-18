@@ -10,7 +10,7 @@ use App\Http\Controllers\HomeController;
 
 
 
-Route::get('/', [HomeController::class, 'index'])->name('dashboard');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/kegiatann', [HomeController::class, 'kegiatan'])->name('kegiatann');
 Route::get('/cashinn', [HomeController::class, 'cashin'])->name('cashinn');
 Route::get('/cashoutt', [HomeController::class, 'cashout'])->name('cashoutt');
@@ -19,12 +19,12 @@ Route::get('/login', function () {
     return view('pages.auth.login');
 })->name('login'); // Tambahkan ->name('login')
 
-
-
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
-    Route::get('home', function () {
-        return view('pages.dashboard');
-    })->name('home');
+    // Route::get('home', function () {
+    //     return view('pages.dashboard');
+    // })->name('home');
+
+    Route::get('/dashboard', [CashinController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('kegiatan', KegiatanController::class);
 

@@ -52,7 +52,7 @@ class KegiatanController extends Controller
             'waktu_kegiatan' => 'required',
             'tempat_kegiatan' => 'required',
             'status_kegiatan' => 'required',
-            'deskripsi_kegiatan' => 'required',
+            'deskripsi_kegiatan' => 'required|min:255',
         ]);
 
         $kegiatan->update($request->all());

@@ -9,6 +9,7 @@
 <ul>
     @foreach ($kegiatans as $kegiatan)
         <li>{{ $kegiatan->nama_kegiatan }} - {{ $kegiatan->tanggal_kegiatan }}</li>
+        <p>{{$kegiatan->deskripsi_kegiatan}}</p>
     @endforeach
 </ul>
 @endsection

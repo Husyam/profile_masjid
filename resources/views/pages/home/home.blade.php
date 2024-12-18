@@ -8,7 +8,11 @@
 <div class="row align-items-center">
     <!-- Kolom Gambar -->
     <div class="col-md-6">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Masjid_Agung_Palembang.jpg/440px-Masjid_Agung_Palembang.jpg" class="img-fluid rounded" alt="Masjid Agung Palembang">
+        {{-- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Masjid_Agung_Palembang.jpg/440px-Masjid_Agung_Palembang.jpg" class="img-fluid rounded" alt="Masjid Agung Palembang"> --}}
+
+
+        {{-- get image from public->img --}}
+        <img src="{{ asset('img/masjid.jpeg') }}" class="img-fluid rounded" alt="Masjid Agung Palembang">
     </div>
 
     <!-- Kolom Deskripsi -->

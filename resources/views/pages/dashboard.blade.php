@@ -26,50 +26,10 @@
                 </div>
             @endif
 
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-primary">
-                            <i class="far fa-user"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Total Users</h4>
-                            </div>
-                            <div class="card-body">
-                                {{ App\Models\User::count() }}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-danger">
-                            <i class="far fa-newspaper"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Categories</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>2</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                    <div class="card card-statistic-1">
-                        <div class="card-icon bg-warning">
-                            <i class="far fa-file"></i>
-                        </div>
-                        <div class="card-wrap">
-                            <div class="card-header">
-                                <h4>Product</h4>
-                            </div>
-                            <div class="card-body">
-                                <p>2</p>
-                            </div>
-                        </div>
+                <div class="card-body">
+                    <h3 class="mb-2">Grafik Kas Masuk</h3>
+                    <div class="chart-container">
+                        <canvas id="revenue-chart" width="400" height="200"></canvas>
                     </div>
                 </div>
 
@@ -80,7 +40,7 @@
 @endsection
 
 @push('scripts')
-    <!-- JS Libraies -->
+    <!-- JS Libraries -->
     <script src="{{ asset('library/simpleweather/jquery.simpleWeather.min.js') }}"></script>
     <script src="{{ asset('library/chart.js/dist/Chart.min.js') }}"></script>
     <script src="{{ asset('library/jqvmap/dist/jquery.vmap.min.js') }}"></script>
@@ -90,4 +50,66 @@
 
     <!-- Page Specific JS File -->
     <script src="{{ asset('js/page/index-0.js') }}"></script>
+
+    <script>
+
+        const cashins = @json($cashins);
+        const chartData = {
+            labels: cashins.map(cashin => {
+                // Format date to a more readable format
+                return new Date(cashin.tanggal_transaksi).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            }),
+            amounts: cashins.map(cashin => parseFloat(cashin.jumlah))
+        };
+
+        const ctx = document.getElementById('revenue-chart').getContext('2d');
+        const revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: chartData.labels,
+                datasets: [{
+                    label: 'Cashin Amount',
+                    data: chartData.amounts,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 2,
+                    tension: 0.4 // Adds some curve to the line
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                // Format tooltip to show currency
+                                return new Intl.NumberFormat('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                }).format(context.parsed.y);
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            // Format y-axis labels as currency
+                            callback: function(value) {
+                                return new Intl.NumberFormat('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR'
+                                }).format(value);
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 @endpush

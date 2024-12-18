@@ -14,4 +14,7 @@ class cashin extends Model
         // 'total',
 
     ];
+
+    protected $dates = ['tanggal_transaksi'];
+
 }

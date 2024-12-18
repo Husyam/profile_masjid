@@ -18,7 +18,7 @@ return new class extends Migration
             $table->time('waktu_kegiatan');
             $table->string('tempat_kegiatan');
             $table->string('status_kegiatan');
-            $table->string('deskripsi_kegiatan');
+            $table->text('deskripsi_kegiatan');
             $table->timestamps();
         });
     }
