@@ -6,10 +6,21 @@
 
 @section('main')
 <h2>Data Pemasukan</h2>
-<ul>
-    @foreach ($cashins as $cashin)
-        <li>{{ $cashin->tanggal_transaksi }} - Rp{{ number_format($cashin->jumlah, 2, ',', '.') }}</li>
-    @endforeach
-</ul>
+<table class="table table-striped table-bordered">
+    <thead class="table-success">
+        <tr>
+            <th>Tanggal Transaksi</th>
+            <th>Jumlah Pemasukan</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($cashins as $cashin)
+            <tr>
+                <td>{{ $cashin->tanggal_transaksi }}</td>
+                <td>Rp{{ number_format($cashin->jumlah, 2, ',', '.') }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 <p>Total: Rp{{ number_format($totalCashin, 2, ',', '.') }}</p>
 @endsection
